@@ -13,16 +13,17 @@ def ensure_dir(file_path):
         os.mkdir(file_path)
 
 
-def downsample_video(clip_resized, params, save_downsampled=False):
+def downsample_video(clip_resized, params, save_downsampled=False, verbose=False):
     num_frames = round(clip_resized.fps * clip_resized.duration)
-    print("Number of frames: {}".format(num_frames))
+    # print("Original number of frames: {}".format(num_frames))
 
     downsample = clip_resized.fps / params['fps']
     downsampled_frames = []
     counter = 0
     for i, frame in enumerate(clip_resized.iter_frames()):
         # We want 30 frames total, not 31
-        if i % downsample == 0 and counter < downsample * params['fps'] - 1:
+        # if i % downsample == 0 and counter < downsample * params['fps'] - 1:
+        if i % downsample == 0 and counter < downsample * params['fps']:
             downsampled_frames.append(frame)
             counter += 1
 
