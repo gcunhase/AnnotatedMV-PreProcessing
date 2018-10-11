@@ -13,6 +13,7 @@ librosa==0.6.2
 llvmlite==0.25.0
 matplotlib==3.0.0
 moviepy==0.2.3.5
+natsort==5.4.1
 networkx==2.2
 numba==0.40.1
 numpy==1.15.2

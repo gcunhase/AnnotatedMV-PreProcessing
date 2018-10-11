@@ -14,7 +14,7 @@ Pre-processing of annotated music video, namely COGNIMUSE
 ```
 pip install --upgrade pip
 pip install numpy requests moviepy
-pip install scikit-image librosa
+pip install scikit-image librosa natsort
 ```
 
 ### Note

@@ -19,9 +19,10 @@ __author__ = "Gwena Cunha"
 
 params = {
     'fps': 10,
-    'root': utils.project_dir_name() + 'data/',
+    'root': '/media/ceslea/DATA/VideoEmotion/DataWithEmotionTags_noText_correctedAudio_hsio/',
     'new_size': 100,
-    'sr': 16000
+    'sr': 16000,
+    'results_dir': utils.project_dir_name() + 'data/'
 }
 
 
@@ -48,12 +49,13 @@ def save_npz(videos, type='train'):
     frame_hsv_arr = []
     audio_arr = []
     for v in videos:
+        data_path = params['root'] + "Video_emotion_" + v + "_noText/"
         # Load video and corresponding audio
-        video_path = params['root'] + v + "/selected_avi/*.avi"
+        video_path = data_path + "selected_avi/*.avi"
         video_filenames = glob.glob(video_path)
         video_filenames = natsorted(video_filenames)
         # Load corresponding audio
-        audio_path = params['root'] + v + "/selected_wav_eq/*.wav"
+        audio_path = data_path + "selected_wav_eq/*.wav"
         audio_filenames = glob.glob(audio_path)
         audio_filenames = natsorted(audio_filenames)
 
