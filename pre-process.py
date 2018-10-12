@@ -22,6 +22,7 @@ params = {
     'root': '/media/ceslea/DATA/VideoEmotion/DataWithEmotionTags_noText_correctedAudio_hsio/',
     'new_size': 100,
     'sr': 16000,
+    'audio_len': 48000,
     'results_dir': utils.project_dir_name() + 'data/'
 }
 
@@ -42,6 +43,20 @@ def load_video(filename):
         frame_hsv = color.rgb2hsv(frame)
         frame_hsv_arr.append(frame_hsv)
     return frame_hsv_arr
+
+
+def process_audio(audio_arr, pad_size=48000):
+    # Check audio files size and pad
+    audio_arr_padded = []
+    for audio in audio_arr:
+        f_length = len(audio)
+        if f_length < pad_size:
+            audio_pad = np.zeros([pad_size])
+            audio_pad[0:f_length] = audio
+            audio_arr_padded.append(audio_pad)
+        else:
+            audio_arr_padded.append(audio[0:pad_size])
+    return audio_arr_padded
 
 
 def save_npz(videos, type='train'):
@@ -67,12 +82,18 @@ def save_npz(videos, type='train'):
 
     # Transpose from (N, 30, 100, 100, 3) to (N, 30, 3, 100, 100)
     frame_hsv_arr_transpose = np.transpose(frame_hsv_arr, (0, 1, 4, 2, 3))
-    print("Shapes - video: {}/{}, audio: {}".format(np.shape(frame_hsv_arr), np.shape(frame_hsv_arr_transpose),
-                                                    np.shape(audio_arr)))
+    # Pad audio to audio_len if not already
+    audio_arr_padded = process_audio(audio_arr, pad_size=params['audio_len'])
+    print("Shapes - video: {}/{}, audio: {}/{}".format(np.shape(frame_hsv_arr), np.shape(frame_hsv_arr_transpose),
+                                                       np.shape(audio_arr), np.shape(audio_arr_padded)))
 
     # Save in .npz
-    save_npz_filename = '{}video_feats_HSL_{}fps_{}.npz'.format(params['root'], params['fps'], type)
+    utils.ensure_dir(params['results_dir'])
+    save_npz_filename = '{}video_feats_HSL_{}fps_{}.npz'.format(params['results_dir'], params['fps'], type)
     np.savez_compressed(save_npz_filename, HSL_data=frame_hsv_arr_transpose, audio=audio_arr)
+
+    save_npz_filename = '{}video_feats_HSL_{}fps_pad_{}.npz'.format(params['results_dir'], params['fps'], type)
+    np.savez_compressed(save_npz_filename, HSL_data=frame_hsv_arr_transpose, audio=audio_arr_padded)
 
 
 if __name__ == '__main__':
