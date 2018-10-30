@@ -25,10 +25,9 @@ def srt_to_text(root_dir):
                 txt_file.write(sentence+'\n')
                 sentence = ''
                 count = 0
-        
- 
+
+
 if __name__ == '__main__':
-    print("Main")
     videos = {'BMI', 'CHI', 'CRA', 'DEP', 'FNE', 'GLA', 'LOR'}
     for v in videos:
         srt_to_text('srt_data/{}_text/'.format(v))

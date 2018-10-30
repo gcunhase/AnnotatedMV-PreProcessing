@@ -14,6 +14,10 @@ def ensure_dir(file_path):
 
 
 def downsample_video(clip_resized, params, save_downsampled=False, verbose=False):
+    """
+        Downsample video files from 30 fps to 10 fps
+    """
+
     num_frames = round(clip_resized.fps * clip_resized.duration)
     # print("Original number of frames: {}".format(num_frames))
 

@@ -9,7 +9,7 @@ from natsort import natsorted
 
 
 """
-    Pre-processes data considering video and audio only
+    Pre-processes data considering already spliced video and audio only
     Synchronize video and audio
 """
 
