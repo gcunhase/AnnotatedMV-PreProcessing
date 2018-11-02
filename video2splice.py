@@ -2,8 +2,6 @@
 import numpy as np
 from moviepy.editor import *
 import utils
-from skimage import color
-import librosa
 from timeit import default_timer as timer
 from SrtTextHandler import SrtTextHandler
 from DatEmotionHandler import DatEmotionHandler
@@ -14,8 +12,7 @@ import pandas as pd
 
 """
     Splice video into S seconds each -> video, emotion, audio, text (?)
-    2 options: 
-        1. Start splicing video from the beginning
+    Start splicing video from the beginning
             3 seconds BMI: 625 (1: 17, 0: 608)
                       CHI: 602 (1: 602, 0: 0)
                       CRA: 532 (1: 5, 0: 527)
@@ -30,7 +27,6 @@ import pandas as pd
                        FNE: 181 (1: 146, 0: 35) 947.94secs
                        GLA: 180 (1: 142, 0: 38) 923.03secs
                        LOR: 225 (1: 57, 0: 168) 1271.24secs
-        2. Start splicing video from the first text information
 """
 
 
@@ -47,8 +43,6 @@ params = {
 def splice_video(filename, num_samples=-1):
     # Load videos (fps = 30)
     video_clip = VideoFileClip(filename)
-
-    # fps = round(clip.fps)
     vid_fps = round(video_clip.fps)
     vid_num_frames = round(vid_fps * video_clip.duration)
     vid_frames_per_splice = params['seconds'] * vid_fps
