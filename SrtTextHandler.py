@@ -3,50 +3,47 @@ import unittest
 import utils
 import os
 import pandas as pd
-import numpy as np
 from collections import defaultdict
 
 """
-    Handle .srt information
+    Handles .srt text information
+    Transform it into .txt or .csv
 """
 
 __author__ = "Gwena Cunha"
 
 
 params = {
-    'root': utils.project_dir_name() + 'data_test/',
+    'root': utils.project_dir_name() + 'data_test/BMI/',
     'seconds': 10
 }
 
 
 class SrtTextHandler:
     def __init__(self, root_dir, srt_filename='subtitle.srt'):
-        print("Init")
         self.root_dir = root_dir
         self.srt_filename = srt_filename
-        self.srt_file = self.get_srt_file()
+        self.srt_file = utils.get_file(self.root_dir, self.srt_filename)
         self.srt_sentences = self.srt_file.read().splitlines()
         self.csv_data = None
 
-    def get_srt_file(self):
-        try:
-            filename = self.root_dir + self.srt_filename
-            if os.path.isfile(filename):
-                return open(filename, 'r')
-            else:
-                raise FileNotFoundError("Exception: file not found!")
-        except FileNotFoundError as error:
-            print(error)
-            return None
-
     def get_sec(self, time_str):
+        """
+        HH:MM:SS,sss to seconds
+
+        :param time_str: time in HH:MM:SS,sss format
+        :return:
+        """
         h, m, s = time_str.split(':')
         ss, ms = s.split(',')
         return int(h) * 3600 + int(m) * 60 + int(ss) + int(ms) / 1000
 
     def srt_to_csv(self, csv_filename='text.csv'):
         """
-            Transform .srt files into .csv files with start and end time and related text
+        Transform .srt files into .csv files with start and end time, duration, and related text
+
+        :param csv_filename: filename where dataframe will be saved to in csv format
+        :return:
         """
         self.csv_data = defaultdict(list)
         count = 0
@@ -71,13 +68,15 @@ class SrtTextHandler:
                     self.csv_data['text'].append(sentence)
                     sentence = ''
                     count = 0
-
         df = pd.DataFrame(self.csv_data, columns=['ID', 'init_time', 'final_time', 'duration', 'text'])
         df.to_csv(self.root_dir + csv_filename, index=False)
 
     def srt_to_text(self, txt_filename='text.txt'):
         """
-            Transform .srt files into .txt files
+        Transform .srt files into .txt files
+
+        :param txt_filename: filename where text will be saved to
+        :return:
         """
         saved_filename = self.root_dir + txt_filename
         txt_file = open(saved_filename, 'w')
@@ -97,13 +96,20 @@ class SrtTextHandler:
                     count = 0
 
     def text_between_times(self, init_time, final_time, verbose=False):
+        """
+        Returns text between initial and final time
+
+        :param init_time: initial time in seconds
+        :param final_time: final time in seconds
+        :param verbose: if print is allowed or not
+        :return: String (sentence)
+        """
         if self.csv_data is not None:
 
             sentence = ''
             real_init_time = init_time
             real_final_time = final_time
             for i, f, text in zip(self.csv_data['init_time'], self.csv_data['final_time'], self.csv_data['text']):
-                # if init_time <= final_time and (f <= init_time >= i or i <= final_time <= f):
                 if init_time <= f and final_time >= i and ((init_time <= i and final_time <= f) or
                                                            (init_time <= i and f <= final_time) or
                                                            (i <= init_time and f <= final_time) or
@@ -122,7 +128,7 @@ class SrtTextHandler:
 class TestSrtTextHandler(unittest.TestCase):
 
     def setUp(self):
-        print("Set up")
+        print("\nSet up")
         self.root_dir = params['root']
         self.srt_filename = 'subtitle.srt'
         self.srtTextHandler = SrtTextHandler(self.root_dir, srt_filename=self.srt_filename)
@@ -135,11 +141,6 @@ class TestSrtTextHandler(unittest.TestCase):
         self.srtTextHandler.srt_to_text(txt_filename=txt_filename)
         self.assertTrue(os.path.isfile(self.root_dir + txt_filename))
 
-    def test_srt_to_csv(self):
-        print("Testing srt_to_csv")
-        csv_filename = 'text.csv'
-        self.srtTextHandler.srt_to_csv(csv_filename=csv_filename)
-        self.assertTrue(os.path.isfile(self.root_dir + csv_filename))
 
     def test_text_between_times(self):
         print("Testing text_between_times")
