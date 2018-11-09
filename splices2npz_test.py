@@ -73,7 +73,8 @@ if __name__ == '__main__':
     text_csv = pd.read_csv(params['root'] + "text_splices_3secs.csv")
     text_data = text_csv['text']
     text = text_data[sample_idx]
-    text = "" if math.isnan(text) else text
+    # text = "" if math.isnan(text) else text
+    text = "" if isinstance(text, float) else text
     print("text: {}, {}: {}".format(np.shape(text_data), sample_idx, text))
 
     # Save in .npz
