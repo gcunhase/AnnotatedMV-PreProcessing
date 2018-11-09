@@ -38,4 +38,4 @@ pip install scikit-image librosa natsort
 ```
 
 ### Note
-* In *ImageSequenceClip.py*, change *isinstance(sequence, list)* in line 62 for *isinstance(sequence, np.ndarray) or isinstance(sequence, list)*
+* In *ImageSequenceClip.py*, change *isinstance(sequence, list)* in line 62 for *isinstance(sequence, list) or isinstance(sequence, np.ndarray)*

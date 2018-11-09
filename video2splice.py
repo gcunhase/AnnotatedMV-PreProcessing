@@ -12,21 +12,21 @@ import pandas as pd
 
 """
     Splice video into S seconds each -> video, emotion, audio, text (?)
-    Start splicing video from the beginning
-            3 seconds BMI: 625 (1: 17, 0: 608)
-                      CHI: 602 (1: 602, 0: 0)
-                      CRA: 532 (1: 5, 0: 527)
-                      DEP: 609 (1: 364, 0: 245)
-                      FNE: 605 (1: 491, 0: 114)
-                      GLA: 600 (1: 475, 0: 125)
-                      LOR: 750 (1: 193, 0: 557)
-            10 seconds BMI: 187 (1: 5, 0: 182) 900secs (script run)
-                       CHI: 180 (1: 180, 0: 0) 932.82secs
-                       CRA: 159 (1: 1, 0: 158) 806.36secs
-                       DEP: 182 (1: 107, 0: 75) 925.69secs
-                       FNE: 181 (1: 146, 0: 35) 947.94secs
-                       GLA: 180 (1: 142, 0: 38) 923.03secs
-                       LOR: 225 (1: 57, 0: 168) 1271.24secs
+    Start splicing video from the beginning (if more than 1 time is shown, it means we ran the code more than once)
+            3 seconds BMI: 625 (1: 17, 0: 608) 1224.92secs, 1736.98secs
+                      CHI: 602 (1: 602, 0: 0) 1199.21secs, 1618.33secs
+                      CRA: 532 (1: 5, 0: 527) 1035.77secs, 1383.56secs
+                      DEP: 609 (1: 364, 0: 245) 1210.28secs, 1655.11secs
+                      FNE: 605 (1: 491, 0: 114) 1662.55secs
+                      GLA: 600 (1: 475, 0: 125) 1641.90secs
+                      LOR: 750 (1: 193, 0: 557) 2018.05secs
+            10 seconds BMI: 187 (1: 5, 0: 182) 900secs, 1040.52secs (script run)
+                       CHI: 180 (1: 180, 0: 0) 932.82secs, 1021.42secs
+                       CRA: 159 (1: 1, 0: 158) 806.36secs, 874.45secs
+                       DEP: 182 (1: 107, 0: 75) 925.69secs, 1009.31secs
+                       FNE: 181 (1: 146, 0: 35) 947.94secs, 1014.08secs
+                       GLA: 180 (1: 142, 0: 38) 923.03secs, 975.29secs
+                       LOR: 225 (1: 57, 0: 168) 1271.24secs, 1262.19secs
 """
 
 
@@ -59,7 +59,7 @@ def splice_video(filename, num_samples=-1):
             if splice == num_samples:
                 break
         video_splices[splice].append(frame)
-    if splice == -1:
+    if num_samples == -1:
         del video_splices[splice]  # last splice has different size
     print("Video - Num of video splices: {}".format(splice))
 
@@ -68,7 +68,6 @@ def splice_video(filename, num_samples=-1):
     utils.ensure_dir(video_splices_dir)
     for k, v in video_splices.items():
         clip = ImageSequenceClip(v, fps=vid_fps)
-        # clip.set_audio()
         clip.write_videofile('{}/{}.mp4'.format(video_splices_dir, k))
     return video_clip
 
@@ -91,20 +90,30 @@ def splice_audio(audio_clip, num_samples=-1):
                 break
         audio_monochannel = frame[0]
         audio_splices[splice].append(audio_monochannel)
-    if splice == -1:
+    if num_samples == -1:
         del audio_splices[splice]  # last splice has different size
     print("Splices: {}".format(splice))
 
     # Downsample to sr
-    print("Downsampling audio from {} to {}".format(audio_clip.fps, params['sr']))
-    audio_splices_down = utils.downsample_audio(audio_splices, audio_fps, params['sr'], params['seconds'])
+    # print("Downsampling audio from {} to {}".format(audio_clip.fps, params['sr']))
+    # audio_splices_down = utils.downsample_audio(audio_splices, audio_fps, params['sr'], params['seconds'])
+    audio_splices_down = audio_splices
 
     # Save audio splices in folder
+    print("Saving audio splices in folder + changing to 16kHz, 1 channel, 16 bits")
     audio_splices_dir = '{}audio_splices_{}secs'.format(params['root'], params['seconds'])
     utils.ensure_dir(audio_splices_dir)
+    sr_dir = audio_splices_dir + '_16000_c1_16bits'
+    utils.ensure_dir(sr_dir)
+
     for kd, vald in audio_splices_down.items():
         # print("Writing k: {}, val: {} to wav".format(kd, len(vald)))
-        wavfile.write('{}/{}.wav'.format(audio_splices_dir, kd), params['sr'], np.array(vald))
+        # wavfile.write('{}/{}.wav'.format(audio_splices_dir, kd), params['sr'], np.array(vald))
+        wavfile.write('{}/{}.wav'.format(audio_splices_dir, kd), audio_clip.fps, np.array(vald))
+        # Change sample rate to 16000, 1 channel, 16 bits. The -G option fixes clipping issue
+        # os.system('sox {rec_dir}/{filename}.wav -b16 {sr_dir}/{filename}.wav'.
+        os.system('sox {rec_dir}/{filename}.wav -c1 -b16 -r16000 -G {sr_dir}/{filename}.wav'.
+                  format(filename=kd, rec_dir=audio_splices_dir, sr_dir=sr_dir))
 
 
 def splice_text(srt_filename='subtitle.srt'):
@@ -155,7 +164,7 @@ if __name__ == '__main__':
 
     tic = timer()
 
-    video_name = "LOR"  # BMI, CHI, CRA, DEP, FNE, GLA, LOR
+    video_name = "BMI"  # BMI, CHI, CRA, DEP, FNE, GLA, LOR
     num_samples = -1  # num samples (to test code)
 
     # Splice
