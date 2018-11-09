@@ -39,8 +39,7 @@ def downsample_video(clip_resized, params, save_downsampled=False, verbose=False
     counter = 0
     for i, frame in enumerate(clip_resized.iter_frames()):
         # We want 30 frames total, not 31
-        # if i % downsample == 0 and counter < downsample * params['fps'] - 1:
-        if i % downsample == 0 and counter < downsample * params['fps']:
+        if i % downsample == 0 and counter < downsample * params['fps'] - 1:
             downsampled_frames.append(frame)
             counter += 1
 
