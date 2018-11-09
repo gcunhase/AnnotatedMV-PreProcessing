@@ -3,8 +3,7 @@
 Pre-processing of annotated music video, namely COGNIMUSE
 
 ### Run Code
-1. *video2splice.py*: splice video into S seconds each -> video, emotion, audio, text (?)
-    
+1. *video2splice.py*: splice video into S seconds each -> video, emotion, audio, text
 2. *splices2npz.py*: to run after full video has been spliced accordingly
 
 ### Data
@@ -23,12 +22,11 @@ Pre-processing of annotated music video, namely COGNIMUSE
     
 2. *splices2npz.py*
     * Full: 7 annotated music videos divided into splices of S seconds stored in *data/*
-    TODO: change table to splices 3 seconds and splices 10 seconds
     <p align="left">
     <img src="https://github.com/gcunhase/AnnotatedMV-PreProcessing/blob/master/assets/dataset.png" width="300" alt="Dataset">
     </p>
     
-    * Test: Single *.avi* file in *data_test/*
+    * Test: Single *.avi* or *.mp4* file in *data_test/*
 
 ### Requirements
 ```

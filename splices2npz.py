@@ -93,8 +93,8 @@ def save_npz(videos, type='train'):
 
         for v_filename, a_filename, emotion, text in zip(video_filenames, audio_filenames, emotion_data, text_data):
             text = "" if isinstance(text, float) else text
-            print('Video: {}, audio: {}, emotion: {}, text: {}'.
-                  format(v_filename.split('/')[-1], a_filename.split('/')[-1], emotion, text))
+            print('Video {}: {}, audio: {}, emotion: {}, text: {}'.
+                  format(v, v_filename.split('/')[-1], a_filename.split('/')[-1], emotion, text))
             frame_hsv_arr.append(load_video(v_filename))
             audio, _ = librosa.load(a_filename, sr=params['sr'])
             audio_arr.append(audio)
