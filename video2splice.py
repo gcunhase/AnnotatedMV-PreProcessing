@@ -111,7 +111,6 @@ def splice_audio(audio_clip, num_samples=-1):
         # wavfile.write('{}/{}.wav'.format(audio_splices_dir, kd), params['sr'], np.array(vald))
         wavfile.write('{}/{}.wav'.format(audio_splices_dir, kd), audio_clip.fps, np.array(vald))
         # Change sample rate to 16000, 1 channel, 16 bits. The -G option fixes clipping issue
-        # os.system('sox {rec_dir}/{filename}.wav -b16 {sr_dir}/{filename}.wav'.
         os.system('sox {rec_dir}/{filename}.wav -c1 -b16 -r16000 -G {sr_dir}/{filename}.wav'.
                   format(filename=kd, rec_dir=audio_splices_dir, sr_dir=sr_dir))
 

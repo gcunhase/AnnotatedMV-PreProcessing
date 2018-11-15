@@ -79,7 +79,8 @@ def save_npz(videos, type='train'):
 
         # Load corresponding audio
         # audio_path = data_path + "selected_wav_eq/*.wav"
-        audio_path = data_path + "audio_splices_3secs_16000_c1_16bits/*.wav"
+        # audio_path = data_path + "audio_splices_3secs_16000_c1_16bits/*.wav"
+        audio_path = data_path + "audio_splices_3secs_wav2mid2wav_16000_c1_16bits/*.wav"
         audio_filenames = glob.glob(audio_path)
         audio_filenames = natsorted(audio_filenames)
 
@@ -110,10 +111,12 @@ def save_npz(videos, type='train'):
 
     # Save in .npz
     utils.ensure_dir(params['results_dir'])
+    # save_npz_filename = '{}video_feats_HSL_{}fps_origAudio_{}.npz'.format(params['results_dir'], params['fps'], type)
     save_npz_filename = '{}video_feats_HSL_{}fps_{}.npz'.format(params['results_dir'], params['fps'], type)
     np.savez_compressed(save_npz_filename, HSL_data=frame_hsv_arr_transpose, audio=audio_arr, emotion=emotion_arr,
                         text=text_arr)
 
+    # save_npz_filename = '{}video_feats_HSL_{}fps_origAudio_pad_{}.npz'.format(params['results_dir'], params['fps'], type)
     save_npz_filename = '{}video_feats_HSL_{}fps_pad_{}.npz'.format(params['results_dir'], params['fps'], type)
     np.savez_compressed(save_npz_filename, HSL_data=frame_hsv_arr_transpose, audio=audio_arr_padded,
                         emotion=emotion_arr, text=text_arr)
@@ -121,6 +124,9 @@ def save_npz(videos, type='train'):
 
 if __name__ == '__main__':
     # videos = ['test']
+    # save_npz(videos, type='test')
+
+    # videos = ['BMI']
     # save_npz(videos, type='test')
 
     videos = ['BMI', 'CHI', 'FNE', 'GLA', 'LOR']
