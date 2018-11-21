@@ -28,7 +28,8 @@ params = {
     'new_size': 100,
     'sr': 16000,
     'audio_len': 48000,
-    'results_dir': utils.project_dir_name() + 'data_test/'
+    'results_dir': utils.project_dir_name() + 'data_test/',
+    'seconds': 10,
 }
 
 
@@ -64,8 +65,9 @@ def process_audio(audio_arr, pad_size=48000):
     return audio_arr_padded
 
 
-def save_npz(videos, type='train'):
+def save_npz(videos, type='train', audio_type='instrumental'):
     print(videos)
+    seconds = params['seconds']
     frame_hsv_arr, audio_arr, emotion_arr, text_arr = [], [], [], []
     for v in videos:
         # data_path = params['root'] + "Video_emotion_" + v + "_noText/"
@@ -73,23 +75,25 @@ def save_npz(videos, type='train'):
 
         # Load video and corresponding audio
         # video_path = data_path + "selected_avi/*.avi"
-        video_path = data_path + "video_splices_3secs/*.mp4"
+        video_path = data_path + "video_splices_{}secs/*.mp4".format(seconds)
         video_filenames = glob.glob(video_path)
         video_filenames = natsorted(video_filenames)
 
         # Load corresponding audio
         # audio_path = data_path + "selected_wav_eq/*.wav"
-        # audio_path = data_path + "audio_splices_3secs_16000_c1_16bits/*.wav"
-        audio_path = data_path + "audio_splices_3secs_wav2mid2wav_16000_c1_16bits/*.wav"
+        if audio_type == 'orig':
+            audio_path = data_path + "audio_splices_{}secs_16000_c1_16bits/*.wav".format(seconds)
+        else:
+            audio_path = data_path + "audio_splices_{}secs_wav2mid2wav_16000_c1_16bits/*.wav".format(seconds)
         audio_filenames = glob.glob(audio_path)
         audio_filenames = natsorted(audio_filenames)
 
         # Load corresponding emotion
-        emotion_csv = pd.read_csv(data_path + "intended_1_splices_3secs.csv")
+        emotion_csv = pd.read_csv(data_path + "intended_1_splices_{}secs.csv".format(seconds))
         emotion_data = emotion_csv['emotion']
 
         # Load corresponding text
-        text_csv = pd.read_csv(data_path + "text_splices_3secs.csv")
+        text_csv = pd.read_csv(data_path + "text_splices_{}secs.csv".format(seconds))
         text_data = text_csv['text']
 
         for v_filename, a_filename, emotion, text in zip(video_filenames, audio_filenames, emotion_data, text_data):
@@ -111,13 +115,17 @@ def save_npz(videos, type='train'):
 
     # Save in .npz
     utils.ensure_dir(params['results_dir'])
-    # save_npz_filename = '{}video_feats_HSL_{}fps_origAudio_{}.npz'.format(params['results_dir'], params['fps'], type)
-    save_npz_filename = '{}video_feats_HSL_{}fps_{}.npz'.format(params['results_dir'], params['fps'], type)
+    if audio_type == 'orig':
+        save_npz_filename = '{}video_feats_HSL_{}fps_origAudio_{}secs_{}.npz'.format(params['results_dir'], params['fps'], seconds, type)
+    else:
+        save_npz_filename = '{}video_feats_HSL_{}fps_{}secs_{}.npz'.format(params['results_dir'], params['fps'], seconds, type)
     np.savez_compressed(save_npz_filename, HSL_data=frame_hsv_arr_transpose, audio=audio_arr, emotion=emotion_arr,
                         text=text_arr)
 
-    # save_npz_filename = '{}video_feats_HSL_{}fps_origAudio_pad_{}.npz'.format(params['results_dir'], params['fps'], type)
-    save_npz_filename = '{}video_feats_HSL_{}fps_pad_{}.npz'.format(params['results_dir'], params['fps'], type)
+    if audio_type == 'orig':
+        save_npz_filename = '{}video_feats_HSL_{}fps_origAudio_{}secs_pad_{}.npz'.format(params['results_dir'], params['fps'], seconds, type)
+    else:
+        save_npz_filename = '{}video_feats_HSL_{}fps_{}secs_pad_{}.npz'.format(params['results_dir'], params['fps'], seconds, type)
     np.savez_compressed(save_npz_filename, HSL_data=frame_hsv_arr_transpose, audio=audio_arr_padded,
                         emotion=emotion_arr, text=text_arr)
 
@@ -129,8 +137,11 @@ if __name__ == '__main__':
     # videos = ['BMI']
     # save_npz(videos, type='test')
 
+    audio_type = 'orig'
+    audio_type = 'instrumental'
+
     videos = ['BMI', 'CHI', 'FNE', 'GLA', 'LOR']
-    save_npz(videos, type='train')
+    save_npz(videos, type='train', audio_type=audio_type)
 
     videos = ['CRA', 'DEP']
-    save_npz(videos, type='test')
+    save_npz(videos, type='test', audio_type=audio_type)

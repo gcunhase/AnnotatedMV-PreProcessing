@@ -12,12 +12,13 @@ Based on audio_to_midi_melodia/main_wav2mid2wav.py
 
 if __name__ == '__main__':
 
+    # 10 seconds splices: 44.86 min
     parser = argparse.ArgumentParser()
     parser.add_argument("--script_dir", default="/media/ceslea/DATA/PycharmProjects/audio_to_midi_melodia-master",
                         help="Path to audio2midi project directory.")
     parser.add_argument("--folder", default="data_test/", help="Path to input audio file.")
-    # parser.add_argument("--subfolders", type=list, default=['BMI', 'CHI', 'CRA', 'DEP', 'FNE', 'GLA', 'LOR'],
-    parser.add_argument("--subfolders", type=list, default=['BMI', 'CHI', 'FNE', 'GLA', 'LOR'],
+    # parser.add_argument("--subfolders", type=list, default=['BMI', 'CHI', 'FNE', 'GLA', 'LOR'],
+    parser.add_argument("--subfolders", type=list, default=['BMI', 'CHI', 'CRA', 'DEP', 'FNE', 'GLA', 'LOR'],
                         help="Path to subfolders containing input audio file.")
     parser.add_argument("--bpm", type=int, default=146, help="Tempo of the track in BPM.")
     parser.add_argument("--smooth", type=float, default=0.25,
@@ -26,7 +27,7 @@ if __name__ == '__main__':
     parser.add_argument("--minduration", type=float, default=0.1,
                         help="Minimum allowed duration for note (in seconds). "
                              "Shorter notes will be removed.")
-    parser.add_argument("--jams", action="2tore_const", const=True,
+    parser.add_argument("--jams", action="store_const", const=True,
                         default=False, help="Also save output in JAMS format.")
 
     args = parser.parse_args()
@@ -37,12 +38,12 @@ if __name__ == '__main__':
 
     IFS = ".wav"  # delimiter
     BPM = args.bpm
-    size_audio_files = 3  # in seconds
+    size_audio_files = 10  # in seconds
 
     subdirs = []
     for s in args.subfolders:
         # subdirs.append(args.folder + s + '/audio_splices_3secs_16000_c1_16bits')
-        subdirs.append(args.folder + s + '/audio_splices_3secs')
+        subdirs.append(args.folder + s + '/audio_splices_{}secs'.format(size_audio_files))
 
     for sub in subdirs:
         files = glob.glob(sub + "/*{}".format(IFS))
