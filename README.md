@@ -1,3 +1,4 @@
+[![DOI](https://zenodo.org/badge/152549677.svg)](https://zenodo.org/badge/latestdoi/152549677)
 
 ## About
 Pre-processing of annotated music video, namely COGNIMUSE
@@ -42,7 +43,7 @@ sudo apt-get install python3-tk
 
 2. (Optional) Transform audio to instrumental piano audio
     * Run: `python audio2piano.py`
-    > [More info](https://github.com/gcunhase/wav2midi2wav), needs Python 2.7
+      > [More info](https://github.com/gcunhase/wav2midi2wav), needs Python 2.7
 3. Save spliced data in Python's *npz* format
     * Run: `python splices2npz.py`
     * Run after full video has been spliced accordingly
@@ -54,8 +55,8 @@ sudo apt-get install python3-tk
 4. Results will be a train and test dataset with the *npz* extension in the same root directory containing the data folders
 
 ### Code notes
-    * In *ImageSequenceClip.py*, change *isinstance(sequence, list)* in line 62 for *isinstance(sequence, list) or isinstance(sequence, np.ndarray)*
-    * For *avi* use *png* codec and for *mp4* use *?*
+   * In `ImageSequenceClip.py`, change *isinstance(sequence, list)* in line 62 for *isinstance(sequence, list) or isinstance(sequence, np.ndarray)*
+   * For *avi* use *png* codec
 
 ## Acknowledgement
 Please star or fork if this code was useful for you. If you use it in a paper, please cite as:
@@ -65,7 +66,7 @@ Please star or fork if this code was useful for you. If you use it in a paper, p
     title        = {{gcunhase/AnnotatedMV-PreProcessing: Pre-Processing of COGNIMUSE Annotated Music Video Corpus}},
     month        = oct,
     year         = 2019,
-    doi          = {},
+    doi          = {10.5281/zenodo.3496807},
     version      = {v1.0},
     publisher    = {Zenodo},
     url          = {https://github.com/gcunhase/AnnotatedMV-PreProcessing}
