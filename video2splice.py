@@ -34,7 +34,8 @@ __author__ = "Gwena Cunha"
 
 
 params = {
-    'root': utils.project_dir_name() + 'data/cognimuse_multimodal_robust_bert/',
+    # 'root': utils.project_dir_name() + 'data/cognimuse_multimodal_robust_bert/',
+    'root': utils.project_dir_name() + 'data/cognimuse/',
     'sr': 16000,
     'seconds': 10,
     'num_samples': -1  # default = -1 for all samples. Use different to test code
@@ -180,11 +181,11 @@ if __name__ == '__main__':
     splice_audio(audio_clip, num_samples=num_samples)
     del audio_clip
 
-    # splice_text(srt_filename='subtitle.srt')
+    splice_text(srt_filename='subtitle.srt')
 
     # 1D and 2D emotion splicing
-    # splice_emotion(dat_filename='intended_1.dat', emotion_dim='1D')
-    # splice_emotion(dat_filename='intended_1.dat', emotion_dim='2D')
+    splice_emotion(dat_filename='intended_1.dat', emotion_dim='1D')
+    splice_emotion(dat_filename='intended_1.dat', emotion_dim='2D')
 
     toc = timer()
     print("Program ran for {:.2f} seconds".format(toc-tic))
