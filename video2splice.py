@@ -170,7 +170,7 @@ if __name__ == '__main__':
     video_name = "BMI"  # BMI, CHI, CRA, DEP, FNE, GLA, LOR
     num_samples = params['num_samples']
 
-    # Splice
+    # Splice video and audio
     params['root'] = params['root'] + video_name + '/'
     video_filename = "{}video.mp4".format(params['root'])
     video_clip = VideoFileClip(video_filename)
@@ -179,11 +179,11 @@ if __name__ == '__main__':
     audio_clip = video_clip.audio  # audio_file_clip = AudioFileClip(audio_clip, fps=audio_clip.fps)
     del video_clip
     splice_audio(audio_clip, num_samples=num_samples)
-    del audio_clip
 
+    # Splice Text
     splice_text(srt_filename='subtitle.srt')
 
-    # 1D and 2D emotion splicing
+    # Splice Emotion: 1D and 2D emotion splicing
     splice_emotion(dat_filename='intended_1.dat', emotion_dim='1D')
     splice_emotion(dat_filename='intended_1.dat', emotion_dim='2D')
 
