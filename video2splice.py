@@ -34,7 +34,7 @@ __author__ = "Gwena Cunha"
 
 
 params = {
-    'root': utils.project_dir_name() + 'data_multimodal_robust_bert/',
+    'root': utils.project_dir_name() + 'cognimuse_multimodal_robust_bert/',
     'sr': 16000,
     'seconds': 10,
     'num_samples': -1  # default = -1 for all samples. Use different to test code
