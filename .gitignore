@@ -1,7 +1,11 @@
 .idea/*
-data*/*
+data_test/*
+data_multimodal_robust_bert/*
+data/*.npz
 
 *.pyc
 venv*/*
 
-.DS_Store*
+*.DS_Store*
+*._video.mp4
+*._subtitle.srt
