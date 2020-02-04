@@ -16,12 +16,24 @@ def normalize(arr, min=0, max=1):
     return min + (max - min) * (arr - np.amin(arr)) / (np.amax(arr) - np.amin(arr))
 
 
-data = np.load('data_test/video_feats_HSL_10fps_pad_test.npz')
+# data = np.load('data_test/video_feats_HSL_10fps_pad_test.npz')
+data = np.load('data_test/video_feats_HSL_10fps_origAudio_3secs_intAudio_pad_train.npz')
 HSL_data = data['HSL_data']
 audio = data['audio']
 emotion = data['emotion']
 text = data['text']
 
+num = 0
+for i, a in enumerate(audio):
+    if i == 0:
+        num = np.shape(a)[0]
+        print(np.shape(a))
+    else:
+        if np.shape(a)[0] != num:
+            num = np.shape(a)[0]
+            print(np.shape(a))
+
+'''
 print("HSL_data {}, audio {}, emotion: {}, text: {}".format(np.shape(HSL_data), np.shape(audio), np.shape(emotion), np.shape(text)))
 
 recovered_dir = 'data_test/recovered/'
@@ -53,3 +65,4 @@ for sample_idx in range(0, idx):
     clip.write_videofile(filename, fps=10, codec='png', audio_fps=16000, audio=filename_target_audio)  # export as video
     # os.system('ffmpeg -y -i {} {}{}.mp4'.format(filename, recovered_dir, sample_idx))
     # os.system('ffmpeg -y -i {} -c:v libx264 -c:a copy {}{}.mp4'.format(filename, recovered_dir, sample_idx))
+'''

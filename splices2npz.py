@@ -8,6 +8,7 @@ import glob
 from natsort import natsorted
 import pandas as pd
 import math
+from scipy.io.wavfile import read
 
 
 """
@@ -29,7 +30,7 @@ params = {
     'sr': 16000,
     'audio_len': 48000,
     'results_dir': utils.project_dir_name() + 'data_test/',
-    'seconds': 10,
+    'seconds': 3,
 }
 
 
@@ -101,7 +102,9 @@ def save_npz(videos, type='train', audio_type='instrumental'):
             print('Video {}: {}, audio: {}, emotion: {}, text: {}'.
                   format(v, v_filename.split('/')[-1], a_filename.split('/')[-1], emotion, text))
             frame_hsv_arr.append(load_video(v_filename))
-            audio, _ = librosa.load(a_filename, sr=params['sr'])
+            # audio, _ = librosa.load(a_filename, sr=params['sr'])  # float numbers
+            rate, audio = read(a_filename)  # int numbers -> necessary for SAMPLERNN and CNNSEQ2SEQ models
+            # print(rate)  # 16000 OKAY
             audio_arr.append(audio)
             emotion_arr.append(emotion)
             text_arr.append(text)
@@ -116,29 +119,32 @@ def save_npz(videos, type='train', audio_type='instrumental'):
     # Save in .npz
     utils.ensure_dir(params['results_dir'])
     if audio_type == 'orig':
-        save_npz_filename = '{}video_feats_HSL_{}fps_origAudio_{}secs_{}.npz'.format(params['results_dir'], params['fps'], seconds, type)
+        save_npz_filename = '{}video_feats_HSL_{}fps_origAudio_{}secs_intAudio_{}.npz'.format(params['results_dir'], params['fps'], seconds, type)
     else:
-        save_npz_filename = '{}video_feats_HSL_{}fps_{}secs_{}.npz'.format(params['results_dir'], params['fps'], seconds, type)
+        save_npz_filename = '{}video_feats_HSL_{}fps_{}secs_intAudio_{}.npz'.format(params['results_dir'], params['fps'], seconds, type)
     np.savez_compressed(save_npz_filename, HSL_data=frame_hsv_arr_transpose, audio=audio_arr, emotion=emotion_arr,
                         text=text_arr)
 
     if audio_type == 'orig':
-        save_npz_filename = '{}video_feats_HSL_{}fps_origAudio_{}secs_pad_{}.npz'.format(params['results_dir'], params['fps'], seconds, type)
+        save_npz_filename = '{}video_feats_HSL_{}fps_origAudio_{}secs_intAudio_pad_{}.npz'.format(params['results_dir'], params['fps'], seconds, type)
     else:
-        save_npz_filename = '{}video_feats_HSL_{}fps_{}secs_pad_{}.npz'.format(params['results_dir'], params['fps'], seconds, type)
+        save_npz_filename = '{}video_feats_HSL_{}fps_{}secs_intAudio_pad_{}.npz'.format(params['results_dir'], params['fps'], seconds, type)
     np.savez_compressed(save_npz_filename, HSL_data=frame_hsv_arr_transpose, audio=audio_arr_padded,
                         emotion=emotion_arr, text=text_arr)
 
 
 if __name__ == '__main__':
-    # videos = ['test']
-    # save_npz(videos, type='test')
-
-    # videos = ['BMI']
-    # save_npz(videos, type='test')
 
     audio_type = 'orig'
-    audio_type = 'instrumental'
+    # audio_type = 'instrumental'
+
+    print(audio_type)
+
+    # videos = ['test']
+    # save_npz(videos, type='test', audio_type=audio_type)
+
+    # videos = ['BMI']
+    # save_npz(videos, type='test', audio_type=audio_type)
 
     videos = ['BMI', 'CHI', 'FNE', 'GLA', 'LOR']
     save_npz(videos, type='train', audio_type=audio_type)
