@@ -27,6 +27,13 @@ import pandas as pd
                        FNE: 181 (0: 35, 1: 146) 947.94secs, 1014.08secs
                        GLA: 180 (0: 38, 1: 142) 923.03secs, 975.29secs
                        LOR: 225 (0: 168, 1: 57) 1271.24secs, 1262.19secs
+            10 seconds (2D emotion) BMI: 187 (0: 55, 1: 127, 2: 5) 829.61secs
+                                    CHI: 180 (2: 85, 3: 95) 927.45secs
+                                    CRA: 159 (0: 74, 1: 84, 3: 1) 1876.42secs
+                                    DEP: 182 (0: 26, 1: 49, 2: 100, 3: 7) 2238.19secs
+                                    FNE: 181 (0: 12, 1: 23, 2: 129, 3: 17) 2301.31secs
+                                    GLA: 180 (0: 10, 1: 28, 2: 70, 3: 72) 2246.35secs
+                                    LOR: 225 (0: 70, 1: 98, 2: 35, 3: 22) 3242.56secs
 """
 
 
@@ -34,8 +41,7 @@ __author__ = "Gwena Cunha"
 
 
 params = {
-    # 'root': utils.project_dir_name() + 'data/cognimuse_multimodal_robust_bert/',
-    'root': utils.project_dir_name() + 'data/cognimuse/',
+    'root': utils.project_dir_name() + 'data/cognimuse_multimodal_robust_bert/',
     'sr': 16000,
     'seconds': 10,
     'num_samples': -1  # default = -1 for all samples. Use different to test code
@@ -167,21 +173,21 @@ if __name__ == '__main__':
 
     tic = timer()
 
-    video_name = "BMI"  # BMI, CHI, CRA, DEP, FNE, GLA, LOR
+    video_name = "LOR"  # BMI, CHI, CRA, DEP, FNE, GLA, LOR
     num_samples = params['num_samples']
 
     # Splice video and audio
     params['root'] = params['root'] + video_name + '/'
     video_filename = "{}video.mp4".format(params['root'])
     video_clip = VideoFileClip(video_filename)
-    splice_video(video_clip, num_samples=num_samples)
+    # splice_video(video_clip, num_samples=num_samples)
 
     audio_clip = video_clip.audio  # audio_file_clip = AudioFileClip(audio_clip, fps=audio_clip.fps)
     del video_clip
-    splice_audio(audio_clip, num_samples=num_samples)
+    # splice_audio(audio_clip, num_samples=num_samples)
 
     # Splice Text
-    splice_text(srt_filename='subtitle.srt')
+    # splice_text(srt_filename='subtitle.srt')
 
     # Splice Emotion: 1D and 2D emotion splicing
     splice_emotion(dat_filename='intended_1.dat', emotion_dim='1D')

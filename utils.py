@@ -31,14 +31,16 @@ def get_emotion_score(emotion_arr, emotion_dim):
     if emotion_dim == '1D':
         return valence
     else:  # '2D'
-        if valence == 0 & arousal == 1:  # NegHigh
-            em = 0
-        elif valence == 0 & arousal == 0:  # NegLow
-            em = 1
-        elif valence == 1 & arousal == 0:  # PosLow
-            em = 2
-        else:  # PosHigh
-            em = 3
+        if valence == 0:  # Neg
+            if arousal == 1:   # NegHigh
+                em = 0
+            else:  # NegLow
+                em = 1
+        else:  # Pos
+            if arousal == 0:  # PosLow
+                em = 2
+            else:  # PosHigh
+                em = 3
         return em
 
 
