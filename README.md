@@ -49,9 +49,22 @@ sudo apt-get install python3-tk
       ```
       .data_test
       +-- BMI
-      |   +-- intended_1.dat
-      |   +-- subtitle.srt
-      |   +-- video.mp4
+      |   +-- audio_splices_Xsecs
+      |   |   0.wav
+      |   ...
+      |   |   N.wav
+      |   +-- emotion
+      |   |   +-- intended_1.dat
+      |   |   +-- intended_1_[1D/2D].csv
+      |   |   +-- intended_1_[1D/2D]_splices_Xsecs.csv
+      |   +-- text
+      |   |   +-- subtitle.srt
+      |   |   +-- text.csv
+      |   |   +-- text_splices_Xsecs.csv
+      |   +-- video_splices_Xsecs
+      |   |   0.mp4
+      |   ...
+      |   |   N.mp4
       ...
       ```
 
