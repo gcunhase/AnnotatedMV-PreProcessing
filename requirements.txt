@@ -11,3 +11,7 @@ scikit-learn
 scipy
 tqdm
 urllib3
+vamp
+midiutil
+jams
+pydub
