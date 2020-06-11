@@ -1,6 +1,7 @@
 .idea/*
 data_test/*
 data/cognimuse_*
+data/deap*
 *.npz
 
 *.pyc
