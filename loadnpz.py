@@ -4,6 +4,7 @@ from moviepy.editor import ImageSequenceClip
 from skimage import color
 import utils
 import os
+from collections import defaultdict
 
 """
     Load npz and save test video and audio
@@ -16,13 +17,20 @@ def normalize(arr, min=0, max=1):
     return min + (max - min) * (arr - np.amin(arr)) / (np.amax(arr) - np.amin(arr))
 
 
-# data = np.load('data_test/video_feats_HSL_10fps_pad_test.npz')
-data = np.load('data_test/video_feats_HSL_10fps_origAudio_3secs_intAudio_pad_train.npz')
+data = np.load('data_test/video_feats_HSL_10fps_3secs_intAudio_pad_train.npz')  # HSL_data, emotion, audio, text
+# data = np.load('data/cognimuse_multimodal_robust_bert/video_feats_HSL_10fps_10secs_test_2D_with_incomplete_noAudio.npz')  # video_feats_HSL_10fps_origAudio_3secs_intAudio_pad_train.npz')
 HSL_data = data['HSL_data']
-audio = data['audio']
 emotion = data['emotion']
 text = data['text']
 
+e_dict = defaultdict(lambda: 0)
+for e in emotion:
+    e_dict[e] += 1
+
+print(e_dict.items())
+
+'''
+audio = data['audio']
 num = 0
 for i, a in enumerate(audio):
     if i == 0:
@@ -32,6 +40,7 @@ for i, a in enumerate(audio):
         if np.shape(a)[0] != num:
             num = np.shape(a)[0]
             print(np.shape(a))
+'''
 
 '''
 print("HSL_data {}, audio {}, emotion: {}, text: {}".format(np.shape(HSL_data), np.shape(audio), np.shape(emotion), np.shape(text)))
