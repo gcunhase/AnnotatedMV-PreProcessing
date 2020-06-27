@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/152549677.svg)](https://zenodo.org/badge/latestdoi/152549677)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3910918.svg)](https://doi.org/10.5281/zenodo.3910918)
 
 ## About
 Pre-processing of annotated music video datasets:
@@ -113,16 +113,18 @@ sudo apt-get install -y sox
 ## Acknowledgement
 Please star or fork if this code was useful for you. If you use it in a paper, please cite as:
 ```
-@software{cunha_sergio2019preprocessing_cognimuse,
-    author       = {Gwenaelle Cunha Sergio},
-    title        = {{gcunhase/AnnotatedMV-PreProcessing: Pre-Processing of COGNIMUSE Annotated Music Video Corpus}},
-    month        = oct,
-    year         = 2019,
-    doi          = {10.5281/zenodo.3496807},
-    version      = {v1.0},
-    publisher    = {Zenodo},
-    url          = {https://github.com/gcunhase/AnnotatedMV-PreProcessing}
-    }
+@software{gwena_cunha_2020_3910918,
+  author       = {Gwenaelle Cunha Sergio},
+  title        = {{gcunhase/AnnotatedMV-PreProcessing: Pre-Processing 
+                   of Annotated Music Video Corpora (COGNIMUSE and
+                   DEAP)}},
+  month        = jun,
+  year         = 2020,
+  publisher    = {Zenodo},
+  version      = {v2.0},
+  doi          = {10.5281/zenodo.3910918},
+  url          = {https://doi.org/10.5281/zenodo.3910918}
+}
 ```
 
 If you use the COGNIMUSE database:
