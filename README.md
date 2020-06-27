@@ -1,7 +1,9 @@
 [![DOI](https://zenodo.org/badge/152549677.svg)](https://zenodo.org/badge/latestdoi/152549677)
 
 ## About
-Pre-processing of [COGNIMUSE dataset](http://cognimuse.cs.ntua.gr/database) (annotated music video)
+Pre-processing of annotated music video datasets:
+* [COGNIMUSE dataset](http://cognimuse.cs.ntua.gr/database)
+* [DEAP dataset](https://www.eecs.qmul.ac.uk/mmv/datasets/deap/index.html)
 
 ### Contents
 [Requirements](#requirements) • [How to Use](#how-to-use) • [How to Cite](#acknowledgement)
@@ -12,19 +14,10 @@ Tested with Python 2.7 and Ubuntu 16.04
 pip install -r requirements.txt
 sudo apt-get install -y sox
 ```
-
-In more details:
-```
-pip install --upgrade pip
-pip install numpy requests moviepy
-pip install scikit-image librosa natsort
-pip install pydub vamp jams midiutil
-apt-get install ffmpeg bpm-tools
-apt-get install timidity timidity-interfaces-extra
-sudo apt-get install python3-tk
-```
+> See [more details](./README_notes.md)
 
 ## How to Use
+### COGNIMUSE
 0. Download [COGNIMUSE dataset](http://cognimuse.cs.ntua.gr/database):
     * [Download annotations](http://cognimuse.cs.ntua.gr/sites/default/files/COGNIMUSEdatabase_v0.1.zip)
         * Emotion: 2D (valence-arousal) with ranges between [-1, 1]
@@ -83,9 +76,39 @@ sudo apt-get install python3-tk
 
 4. Results will be a train and test dataset with the *npz* extension in the same root directory containing the data folders
 
-### Code notes
-   * In `ImageSequenceClip.py`, change *isinstance(sequence, list)* in line 62 for *isinstance(sequence, list) or isinstance(sequence, np.ndarray)*
-   * For *avi* use *png* codec
+### DEAP
+0. [Download dataset](https://www.eecs.qmul.ac.uk/mmv/datasets/deap/download.html) (need to sign EULA form):
+    * Train data:
+        * Choose a video option: `highlights` (1 minute videos) or `raw video` (original music videos of varying lengths)
+        * Convert `$DEAP_DATA/Video/highlights/*.wmv` files to `mp4`
+        * Copy videos to `./data/deap/mp4/`
+        * Open `$DEAP_DATA/metadata_xls/participatn_ratings.XLS`, save as `$DEAP_DATA/metadata_xls/participatn_ratings.CSV` and copy it to `./data/deap/`
+    * Test data (same for `highlights` or `raw video`):
+        * Extract the first 11 seconds of each train video
+        * Copy it in `./data/deap/test_data/`
+    * The final directory structure should be as follow:
+       ```
+      .data/deap/
+      +-- mp4
+      |   +-- 1.mp4
+      |   +-- 2.mp4
+      |   ...
+      +-- participatn_ratings.csv
+      +-- test_data
+      |   +-- 1.mp4
+      |   +-- 2.mp4
+      |   ...
+      ...
+      ```
+1. Get average of emotion scores
+    * Run: `python deap_1_average_emotion_scores.py`
+2. Splice video, audio, emotion and dummy text files
+    > Dummy text is necessary in order to ensure compatibility with the COGNIMUSE script
+    * Run: `python deap_2_video2splice.py`
+3. (Optional) Transform audio to instrumental piano audio
+    * Run: `python deap_3_audio2piano.py`
+4. Save spliced data in Python's *npz* format
+    * Run: `python deap_4_splices2npz.py`
 
 ## Acknowledgement
 Please star or fork if this code was useful for you. If you use it in a paper, please cite as:
@@ -113,5 +136,19 @@ If you use the COGNIMUSE database:
   pages={54},
   year={2017},
   publisher={Springer}
+}
+```
+
+If you use the DEAP database:
+```
+@article{koelstra2011deap,
+  title={Deap: A database for emotion analysis; using physiological signals},
+  author={Koelstra, Sander and Muhl, Christian and Soleymani, Mohammad and Lee, Jong-Seok and Yazdani, Ashkan and Ebrahimi, Touradj and Pun, Thierry and Nijholt, Anton and Patras, Ioannis},
+  journal={IEEE transactions on affective computing},
+  volume={3},
+  number={1},
+  pages={18--31},
+  year={2011},
+  publisher={IEEE}
 }
 ```
