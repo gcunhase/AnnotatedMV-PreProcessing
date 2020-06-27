@@ -20,6 +20,27 @@ import pandas as pd
                       FNE: 605 (0: 114, 1: 491) 1662.55secs
                       GLA: 600 (0: 125, 1: 475) 1641.90secs
                       LOR: 750 (0: 557, 1: 193) 2018.05secs
+            3 seconds (2D emotion) BMI: 625 (0: 186, 1: 422, 2: 16,  3: 1)
+                                   CHI: 602 (0: 0,   1: 0,   2: 286, 3: 316)
+                                   CRA: 532 (0: 240, 1: 287, 2: 0,   3: 5)
+                                   DEP: 609 (0: 93,  1: 152, 2: 338, 3: 26)
+                                   FNE: 605 (0: 43,  1: 71,  2: 427, 3: 64)
+                                   GLA: 600 (0: 33,  1: 92,  2: 230, 3: 245)
+                                   LOR: 750 (0: 236, 1: 321, 2: 118, 3: 75)
+            5 seconds BMI: 375 (0: 365, 1: 10), 2283.74secs
+                      CHI: 361 (0: 0, 1: 361), 1677.70secs
+                      CRA: 319 (0: 316, 1: 3), 1444.46secs
+                      DEP: 365 (0: 147, 1: 218), 2168.43secs 
+                      FNE: 363 (0: 67, 1: 296), 3054.34secs
+                      GLA: 360 (0: 74, 1: 286), 3000secs
+                      LOR: 450 (0: 336, 1: 114), 2600.92secs
+            5 seconds (2D emotion) BMI: 375 (0: 112, 1: 253, 2: 10,  3: 0)
+                                   CHI: 361 (0: 0,   1: 0,   2: 172, 3: 189)
+                                   CRA: 319 (0: 143, 1: 173, 2: 0,   3: 3)
+                                   DEP: 365 (0: 51,  1: 96,  2: 203, 3: 15)
+                                   FNE: 363 (0: 26,  1: 41,  2: 259, 3: 37)
+                                   GLA: 360 (0: 20,  1: 54,  2: 139, 3: 147) 
+                                   LOR: 450 (0: 144, 1: 192, 2: 69, 3: 45)
             10 seconds BMI: 187 (0: 182, 1: 5) 900secs, 1040.52secs (script run)
                        CHI: 180 (0: 0, 1: 180) 932.82secs, 1021.42secs
                        CRA: 159 (0: 158, 1: 1) 806.36secs, 874.45secs
@@ -27,13 +48,27 @@ import pandas as pd
                        FNE: 181 (0: 35, 1: 146) 947.94secs, 1014.08secs
                        GLA: 180 (0: 38, 1: 142) 923.03secs, 975.29secs
                        LOR: 225 (0: 168, 1: 57) 1271.24secs, 1262.19secs
-            10 seconds (2D emotion) BMI: 187 (0: 55, 1: 127, 2: 5) 829.61secs
-                                    CHI: 180 (2: 85, 3: 95) 927.45secs
-                                    CRA: 159 (0: 74, 1: 84, 3: 1) 1876.42secs
-                                    DEP: 182 (0: 26, 1: 49, 2: 100, 3: 7) 2238.19secs
-                                    FNE: 181 (0: 12, 1: 23, 2: 129, 3: 17) 2301.31secs
-                                    GLA: 180 (0: 10, 1: 28, 2: 70, 3: 72) 2246.35secs
-                                    LOR: 225 (0: 70, 1: 98, 2: 35, 3: 22) 3242.56secs
+            10 seconds (2D emotion) BMI: 187 (0: 55, 1: 127, 2: 5,   3: 0) 829.61secs
+                                    CHI: 180 (0: 0,  1: 0,   2: 85,  3: 95) 927.45secs
+                                    CRA: 159 (0: 74, 1: 84,  2: 0,   3: 1) 1876.42secs
+                                    DEP: 182 (0: 26, 1: 49,  2: 100, 3: 7) 2238.19secs
+                                    FNE: 181 (0: 12, 1: 23,  2: 129, 3: 17) 2301.31secs
+                                    GLA: 180 (0: 10, 1: 28,  2: 70,  3: 72) 2246.35secs
+                                    LOR: 225 (0: 70, 1: 98,  2: 35,  3: 22) 3242.56secs
+            30 seconds BMI: 62 (0: 60, 1: 2), 993.08secs
+                       CHI: 60 (0: 0, 1: 60), 979.18secs
+                       CRA: 53 (0: 52, 1: 1), 900secs
+                       DEP: 60 (0: 28, 1: 32), 900secs
+                       FNE: 60 (0: 9, 1: 51), 975.48secs
+                       GLA: 60 (0: 13, 1: 47), 981.57secs
+                       LOR: 75 (0: 57, 1: 18), 1239.75secs
+            30 seconds (2D emotion) BMI: 62 (0: 18, 1: 42, 2: 2,  3: 0)
+                                    CHI: 60 (0: 0,  1: 0,  2: 29, 3: 31)
+                                    CRA: 53 (0: 23, 1: 29, 2: 0,  3: 1)
+                                    DEP: 60 (0: 8,  1: 20, 2: 29, 3: 3)
+                                    FNE: 60 (0: 3,  1: 6,  2: 46, 3: 5)
+                                    GLA: 60 (0: 2,  1: 11, 2: 23, 3: 24)
+                                    LOR: 75 (0: 22, 1: 35, 2: 11, 3: 7)  
 """
 
 
@@ -41,14 +76,17 @@ __author__ = "Gwena Cunha"
 
 
 params = {
-    'root': utils.project_dir_name() + 'data/cognimuse_multimodal_robust_bert/',
+    'root': utils.project_dir_name() + 'data/cognimuse_3secs/', #'data/cognimuse_multimodal_robust_bert/',
     'sr': 16000,
-    'seconds': 10,
+    'seconds': 3,
     'num_samples': -1  # default = -1 for all samples. Use different to test code
 }
 
 
-def splice_video(video_clip, num_samples=-1):
+def splice_video(video_clip, num_samples=-1, params_substitute=None):
+    # To use in external scripts
+    if params_substitute is not None:
+        params = params_substitute
     # Load videos (fps = 30)
     vid_fps = round(video_clip.fps)
     vid_num_frames = round(vid_fps * video_clip.duration)
@@ -81,7 +119,10 @@ def splice_video(video_clip, num_samples=-1):
     # return video_clip
 
 
-def splice_audio(audio_clip, num_samples=-1):
+def splice_audio(audio_clip, num_samples=-1, params_substitute=None):
+    # To use in external scripts
+    if params_substitute is not None:
+        params = params_substitute
     # Extract audio
     audio_fps = audio_clip.fps
     audio_frames_per_splice = params['seconds'] * audio_fps
@@ -190,7 +231,7 @@ if __name__ == '__main__':
     # splice_text(srt_filename='subtitle.srt')
 
     # Splice Emotion: 1D and 2D emotion splicing
-    splice_emotion(dat_filename='intended_1.dat', emotion_dim='1D')
+    # splice_emotion(dat_filename='intended_1.dat', emotion_dim='1D')
     splice_emotion(dat_filename='intended_1.dat', emotion_dim='2D')
 
     toc = timer()
