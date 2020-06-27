@@ -25,12 +25,12 @@ __author__ = "Gwena Cunha"
 params = {
     'fps': 10,
     # 'root': '/media/ceslea/DATA/VideoEmotion/DataWithEmotionTags_noText_correctedAudio_hsio/',
-    'root': utils.project_dir_name() + 'data/cognimuse_multimodal_robust_bert/',
+    'root': utils.project_dir_name() + 'data/cognimuse_10secs/',
     'new_size': 100,
     'sr': 16000,
-    'audio_len': 48000,
-    'results_dir': utils.project_dir_name() + 'data/cognimuse_multimodal_robust_bert/',
+    'results_dir': utils.project_dir_name() + 'data/cognimuse_10secs/',
     'seconds': 10,
+    'audio_len': 10*16000,  # seconds*sr
 }
 
 
@@ -119,7 +119,7 @@ def save_npz(videos, type='train', audio_type='instrumental', emotion_dim='1D', 
             if data_type == 'with_incomplete' or (data_type == 'only_complete' and len(text) != 0):
                 print('Video {}: {}, audio: {}, emotion: {}, text: {}'.
                       format(v, v_filename.split('/')[-1], a_filename.split('/')[-1], emotion, text))
-                frame_hsv_arr.append(load_video(v_filename))
+                frame_hsv_arr.append(load_video(v_filename, params_substitute=params))
                 # audio, _ = librosa.load(a_filename, sr=params['sr'])  # float numbers
                 rate, audio = read(a_filename)  # int numbers -> necessary for SAMPLERNN and CNNSEQ2SEQ models
                 # print(rate)  # 16000 OKAY
@@ -161,8 +161,8 @@ def save_npz(videos, type='train', audio_type='instrumental', emotion_dim='1D', 
 
 if __name__ == '__main__':
 
-    audio_type = 'orig'
-    # audio_type = 'instrumental'
+    # audio_type = 'orig'
+    audio_type = 'instrumental'
 
     print(audio_type)
 
@@ -172,14 +172,14 @@ if __name__ == '__main__':
     # videos = ['BMI']
     # save_npz(videos, type='test', audio_type=audio_type)
 
-    videos = ['BMI', 'CHI', 'FNE', 'GLA', 'LOR']
+    #videos = ['BMI', 'CHI', 'FNE', 'GLA', 'LOR']
     # save_npz(videos, type='train', audio_type=audio_type, emotion_dim='1D', data_type='only_complete', include_audio=False)
-    save_npz(videos, type='train', audio_type=audio_type, emotion_dim='1D', data_type='with_incomplete', include_audio=False)
-    save_npz(videos, type='train', audio_type=audio_type, emotion_dim='2D', data_type='only_complete', include_audio=False)
-    save_npz(videos, type='train', audio_type=audio_type, emotion_dim='2D', data_type='with_incomplete', include_audio=False)
+    #save_npz(videos, type='train', audio_type=audio_type, emotion_dim='1D', data_type='with_incomplete', include_audio=True)
+    #save_npz(videos, type='train', audio_type=audio_type, emotion_dim='2D', data_type='only_complete', include_audio=False)
+    #save_npz(videos, type='train', audio_type=audio_type, emotion_dim='2D', data_type='with_incomplete', include_audio=False)
 
     videos = ['CRA', 'DEP']
-    save_npz(videos, type='test', audio_type=audio_type, emotion_dim='1D', data_type='only_complete', include_audio=False)
-    save_npz(videos, type='test', audio_type=audio_type, emotion_dim='1D', data_type='with_incomplete', include_audio=False)
-    save_npz(videos, type='test', audio_type=audio_type, emotion_dim='2D', data_type='only_complete', include_audio=False)
-    save_npz(videos, type='test', audio_type=audio_type, emotion_dim='2D', data_type='with_incomplete', include_audio=False)
+    #save_npz(videos, type='test', audio_type=audio_type, emotion_dim='1D', data_type='only_complete', include_audio=False)
+    save_npz(videos, type='test', audio_type=audio_type, emotion_dim='1D', data_type='with_incomplete', include_audio=True)
+    #save_npz(videos, type='test', audio_type=audio_type, emotion_dim='2D', data_type='only_complete', include_audio=False)
+    #save_npz(videos, type='test', audio_type=audio_type, emotion_dim='2D', data_type='with_incomplete', include_audio=False)

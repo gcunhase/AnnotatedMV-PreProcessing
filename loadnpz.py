@@ -17,11 +17,14 @@ def normalize(arr, min=0, max=1):
     return min + (max - min) * (arr - np.amin(arr)) / (np.amax(arr) - np.amin(arr))
 
 
-data = np.load('data_test/video_feats_HSL_10fps_3secs_intAudio_pad_train.npz')  # HSL_data, emotion, audio, text
+#data = np.load('data_test/video_feats_HSL_10fps_10secs_intAudio_pad_train.npz')  # HSL_data, emotion, audio, text
 # data = np.load('data/cognimuse_multimodal_robust_bert/video_feats_HSL_10fps_10secs_test_2D_with_incomplete_noAudio.npz')  # video_feats_HSL_10fps_origAudio_3secs_intAudio_pad_train.npz')
+data = np.load('data/cognimuse_10secs/video_feats_HSL_10fps_10secs_intAudio_pad_test_1D_with_incomplete.npz')  # HSL_data, emotion, audio, text
+#data = np.load('data_test/video_feats_HSL_10fps_10secs_intAudio_pad_train.npz')  # HSL_data, emotion, audio, text
 HSL_data = data['HSL_data']
 emotion = data['emotion']
 text = data['text']
+audio = data['audio']
 
 e_dict = defaultdict(lambda: 0)
 for e in emotion:
