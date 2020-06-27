@@ -18,7 +18,7 @@ if __name__ == '__main__':
                         help="Path to audio2midi project directory.")
     parser.add_argument("--folder", default="data_test/", help="Path to input audio file.")
     # parser.add_argument("--subfolders", type=list, default=['BMI', 'CHI', 'FNE', 'GLA', 'LOR'],
-    parser.add_argument("--subfolders", type=list, default=['BMI', 'CHI', 'CRA', 'DEP', 'FNE', 'GLA', 'LOR'],
+    parser.add_argument("--subfolders", nargs='+', default=['BMI', 'CHI', 'CRA', 'DEP', 'FNE', 'GLA', 'LOR'],
                         help="Path to subfolders containing input audio file.")
     parser.add_argument("--bpm", type=int, default=146, help="Tempo of the track in BPM.")
     parser.add_argument("--smooth", type=float, default=0.25,
@@ -29,6 +29,7 @@ if __name__ == '__main__':
                              "Shorter notes will be removed.")
     parser.add_argument("--jams", action="store_const", const=True,
                         default=False, help="Also save output in JAMS format.")
+    parser.add_argument("--duration", type=int, default=10, help="Duration of audio files in seconds.")
 
     args = parser.parse_args()
 
@@ -38,7 +39,7 @@ if __name__ == '__main__':
 
     IFS = ".wav"  # delimiter
     BPM = args.bpm
-    size_audio_files = 10  # in seconds
+    size_audio_files = args.duration  # in seconds
 
     subdirs = []
     for s in args.subfolders:
