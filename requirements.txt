@@ -2,12 +2,12 @@ moviepy
 audioread
 librosa
 matplotlib
-moviepy
 natsort
 numpy
 pandas
 requests
 scikit-learn
+scikit-image
 scipy
 tqdm
 urllib3
@@ -15,3 +15,5 @@ vamp
 midiutil
 jams
 pydub
+numba==0.43.0
+llvmlite==0.32.1

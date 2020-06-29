@@ -8,6 +8,7 @@ sudo apt-get install -y sox
 
 In more details:
 ```
+pip install numba==0.43.0 llvmlite==0.32.1
 pip install --upgrade pip
 pip install numpy requests moviepy
 pip install scikit-image librosa natsort
