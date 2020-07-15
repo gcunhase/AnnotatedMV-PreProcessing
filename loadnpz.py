@@ -73,8 +73,11 @@ for sample_idx in range(0, idx):
         frame_arr.append(frame_rgb * 255)
 
     clip = ImageSequenceClip(np.array(frame_arr), fps=10)  # 3-second clip, .tolist()
-    filename = '{}{}.avi'.format(recovered_dir, sample_idx)
-    clip.write_videofile(filename, fps=10, codec='png', audio_fps=16000, audio=filename_target_audio)  # export as video
+    clip = clip.resize(newsize=(500, 500))
+    filename = '{}{}.mp4'.format(recovered_dir, sample_idx)
+    filename_withaudio = '{}{}_target.avi'.format(recovered_dir, sample_idx)
+    # codec = png for avi, mpeg4 or libx264 for mp4
+    clip.write_videofile(filename, fps=10, codec='libx264', audio_fps=16000) #, audio=filename_target_audio)  # export as video
+    clip.write_videofile(filename_withaudio, fps=10, codec='png', audio_fps=16000, audio=filename_target_audio)  # export as video
     # os.system('ffmpeg -y -i {} {}{}.mp4'.format(filename, recovered_dir, sample_idx))
     # os.system('ffmpeg -y -i {} -c:v libx264 -c:a copy {}{}.mp4'.format(filename, recovered_dir, sample_idx))
-'''

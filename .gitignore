@@ -2,6 +2,7 @@
 data_test/*
 data/cognimuse_*
 data/deap*
+data/add_audio_to_video
 *.npz
 
 *.pyc
