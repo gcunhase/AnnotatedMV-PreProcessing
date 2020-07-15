@@ -1,6 +1,8 @@
 
+import os
 import numpy as np
-from moviepy.editor import *
+from moviepy.editor import VideoFileClip
+from ImageSequenceClip import ImageSequenceClip
 import utils
 from timeit import default_timer as timer
 from SrtTextHandler import SrtTextHandler

@@ -1,6 +1,7 @@
 
 import numpy as np
-from moviepy.editor import *
+from moviepy.editor import VideoFileClip
+from ImageSequenceClip import ImageSequenceClip
 import utils
 from skimage import color
 import librosa

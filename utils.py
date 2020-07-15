@@ -1,5 +1,5 @@
 import os
-from moviepy.editor import ImageSequenceClip
+from ImageSequenceClip import ImageSequenceClip
 import numpy as np
 from collections import defaultdict
 

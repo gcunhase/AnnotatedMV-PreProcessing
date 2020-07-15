@@ -1,6 +1,6 @@
 
 import numpy as np
-from moviepy.editor import *
+from moviepy.editor import VideoFileClip
 import utils
 from skimage import color
 import librosa
@@ -172,14 +172,14 @@ if __name__ == '__main__':
     # videos = ['BMI']
     # save_npz(videos, type='test', audio_type=audio_type)
 
-    #videos = ['BMI', 'CHI', 'FNE', 'GLA', 'LOR']
+    videos = ['BMI', 'CHI', 'FNE', 'GLA', 'LOR']
     # save_npz(videos, type='train', audio_type=audio_type, emotion_dim='1D', data_type='only_complete', include_audio=False)
-    #save_npz(videos, type='train', audio_type=audio_type, emotion_dim='1D', data_type='with_incomplete', include_audio=True)
+    save_npz(videos, type='train', audio_type=audio_type, emotion_dim='1D', data_type='with_incomplete', include_audio=True)
     #save_npz(videos, type='train', audio_type=audio_type, emotion_dim='2D', data_type='only_complete', include_audio=False)
     #save_npz(videos, type='train', audio_type=audio_type, emotion_dim='2D', data_type='with_incomplete', include_audio=False)
 
-    videos = ['CRA', 'DEP']
+    #videos = ['CRA', 'DEP']
     #save_npz(videos, type='test', audio_type=audio_type, emotion_dim='1D', data_type='only_complete', include_audio=False)
-    save_npz(videos, type='test', audio_type=audio_type, emotion_dim='1D', data_type='with_incomplete', include_audio=True)
+    #save_npz(videos, type='test', audio_type=audio_type, emotion_dim='1D', data_type='with_incomplete', include_audio=True)
     #save_npz(videos, type='test', audio_type=audio_type, emotion_dim='2D', data_type='only_complete', include_audio=False)
     #save_npz(videos, type='test', audio_type=audio_type, emotion_dim='2D', data_type='with_incomplete', include_audio=False)
