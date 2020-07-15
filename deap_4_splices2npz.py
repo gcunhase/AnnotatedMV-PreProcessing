@@ -1,13 +1,9 @@
 
 import numpy as np
-from moviepy.editor import *
 import utils
-from skimage import color
-import librosa
 import glob
 from natsort import natsorted
 import pandas as pd
-import math
 from scipy.io.wavfile import read
 from splices2npz import load_video, process_audio
 
